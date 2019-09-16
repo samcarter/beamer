@@ -477,6 +477,16 @@
     \ifbeamer@containsverbatim
       \let\beamer@howtotreatframe\beamer@dosingleframe
     \fi
+    \beamer@slideinframe=0\relax%
+    \beamer@anotherslidefalse%
+    {\beamer@masterdecode{\beamer@whichframes}}%
+    \message{^^J^^J \beamer@againname:\beamer@whichframes ^^J^^J}
+    \ifbeamer@anotherslide%
+      \message{^^J^^J \beamer@againname:I am Here ^^J^^J}
+      \ifbeamer@autobreak%
+        \let\beamer@howtotreatframe\beamer@autobreakframe%
+      \fi%
+    \fi    
   \fi%
   \beamer@howtotreatframe}
 \def\gobble@onslide{%
