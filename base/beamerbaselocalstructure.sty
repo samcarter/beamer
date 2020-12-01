@@ -480,8 +480,12 @@
 % The following code provided by Audrey http://tex.stackexchange.com/a/57247
 \AtBeginDocument{%
   \@ifpackageloaded{biblatex}
-    {\apptocmd{\blx@env@bibliography}
-       {\let\makelabel\beamer@biblabeltemplate}{}{}
+    {%
+     \apptocmd{\blx@env@bibliography}
+       {\def\makelabel{%
+        \ifentrytype{book}{\beamertemplatebookbibitems}{}%
+        \ifentrytype{online}{\beamertemplateonlinebibitems}{}%
+        \beamer@biblabeltemplate}}{}{}
      \apptocmd{\abx@macro@begentry}
        {\let\bbx@tempa\@empty%
         \usebeamercolor[fg]{bibliography entry author}}{}{}
@@ -493,7 +497,8 @@
         \bbx@tempa\newblock\unspace\usebeamercolor[fg]{bibliography entry title}}{}{}
      \apptocmd{\abx@macro@title}
        {\ifcsundef{abx@field@title}{}{\ifpunct{}{\midsentence\newunitpunct}}%
-        \newblock\unspace\usebeamercolor[fg]{bibliography entry note}}{}{}}
+        \newblock\unspace\usebeamercolor[fg]{bibliography entry note}}{}{}%
+    }
     {}}
     
 % Adding patches to some biblatex styles
