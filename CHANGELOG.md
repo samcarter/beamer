@@ -8,6 +8,13 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Changed 
+
+
+### Fixed
+
+- alignment issue between sidebar outer theme and biblatex (see #645)
+
 ## [v3.60]
 
 ### Changed
