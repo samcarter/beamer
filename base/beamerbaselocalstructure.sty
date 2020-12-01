@@ -481,7 +481,17 @@
 \AtBeginDocument{%
   \@ifpackageloaded{biblatex}
     {\apptocmd{\blx@env@bibliography}
-       {\let\makelabel\beamer@biblabeltemplate}{}{}
+       {\def\makelabel{%
+         \ifentrytype{book}{%
+           \pgfdeclareimage[width=14pt,height=12pt]{beamericonarticle}{beamericonbook}%
+         }{%
+           \ifentrytype{online}{%
+             \pgfdeclareimage[width=14pt,height=14pt]{beamericonarticle}{beamericononline}%
+           }{%
+             \pgfdeclareimage[width=11pt,height=14pt]{beamericonarticle}{beamericonarticle}%
+           }%
+         }%
+      \beamer@biblabeltemplate}}{}{}
      \apptocmd{\abx@macro@begentry}
        {\let\bbx@tempa\@empty%
         \usebeamercolor[fg]{bibliography entry author}}{}{}
