@@ -275,6 +275,11 @@
 
 \define@key{beamerframe}{noframenumbering}[true]{\beamer@noframenumberingtrue}
 
+\newif\ifbeamer@nominiframe
+
+\define@key{beamerframe}{nominiframe}[true]{\beamer@nominiframetrue}
+
+
 \define@key{beamerframe}{environment}{\def\beamer@frameenvironmentsubst{#1}}
 
 \define@key{beamerframe}{typeset second}[true]{\csname beamer@dosecondmode#1\endcsname}
@@ -423,6 +428,7 @@
   \beamer@autobreaklastheight=16000pt%
   \beamer@zoomcount=0\relax%
   \beamer@noframenumberingfalse%
+  \beamer@nominiframefalse%
   \beamer@containsverbatimfalse%
   \beamer@isfragilefalse%
   \beamer@autobreakfalse%
@@ -597,13 +603,15 @@
 \def\beamer@writeslidentry{%
   \expandafter\ifblank\expandafter{\beamer@framestartpage}{}% does not happen normally
   {%else
-    \addtocontents{nav}%
-      {\protect\headcommand{%
-          \protect\slideentry{\the\c@section}{\the\c@subsection}{\the\c@subsectionslide}%
-          {\beamer@framestartpage/\beamer@frameendpage}{\lastsubsection}{\the\c@part}}}%
-    \addtocontents{nav}%
-      {\protect\headcommand{%
-        \protect\beamer@framepages{\beamer@framestartpage}{\beamer@frameendpage}}}%
+    \ifbeamer@nominiframe\else%
+      \addtocontents{nav}%
+        {\protect\headcommand{%
+            \protect\slideentry{\the\c@section}{\the\c@subsection}{\the\c@subsectionslide}%
+            {\beamer@framestartpage/\beamer@frameendpage}{\lastsubsection}{\the\c@part}}}%
+      \addtocontents{nav}%
+        {\protect\headcommand{%
+          \protect\beamer@framepages{\beamer@framestartpage}{\beamer@frameendpage}}}%
+    \fi%
     \clearpage\beamer@notesactions%
   }%
 }
